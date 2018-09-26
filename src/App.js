@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
 // import * as BooksAPI from './BooksAPI'
-import ListBooks from './components/ListBooks'
+import ListShelfs from './components/ListShelfs'
 import SearchBook from './components/SearchBook'
 import './App.css'
 
 
 class BooksApp extends React.Component {
   state = {
-    b_shelfs: [],
+    shelfs: [],
   }
   componentDidMount() {
-    let init_b_shelfs = [
+    let init_shelfs = [
       {
         name: 'Currently Reading',
         books: [
@@ -65,7 +65,7 @@ class BooksApp extends React.Component {
       },
     ]
     this.setState({
-      b_shelfs: init_b_shelfs
+      shelfs: init_shelfs
     })
   }
 
@@ -81,16 +81,7 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              {this.state.b_shelfs.map(shelf => (
-                <div className="bookshelf" key={shelf.name}>
-                  <h2 className="bookshelf-title">{shelf.name}</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      <ListBooks books={shelf.books}/>
-                    </ol>
-                  </div>
-                </div>
-              ))}
+              <ListShelfs shelfs={this.state.shelfs}/>
             </div>
             <div className="open-search">
               <Link className='close-create-contact' to='/search'>Add a book</Link>
