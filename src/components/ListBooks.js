@@ -6,15 +6,14 @@ class ListBooks extends Component {
         
     }
     render() {
-        const {books} = this.props;
+        const { books, updateBook } = this.props;
         return (
             <ol className="books-grid">
                 {books.map(book => (
-                    <Book id={book.id} 
-                          url={book.url} 
-                          title={book.title} 
-                          authors={book.authors}
-                          key={book.id}/>
+                    <Book 
+                        book={book}
+                        updateBook={updateBook} 
+                        key={book.id}/>
                 ))}
             </ol>         
         )

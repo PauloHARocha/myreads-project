@@ -7,12 +7,12 @@ class Shelf extends Component {
 
     }
     render() {
-        const { name, books } = this.props;
+        const { shelf, books, updateBook } = this.props;
         return (
             <div className="bookshelf">
-                <h2 className="bookshelf-title">{name}</h2>
+                <h2 className="bookshelf-title">{shelf.name}</h2>
                 <div className="bookshelf-books">
-                    <ListBooks books={books} />
+                    <ListBooks books={books} updateBook={updateBook}/>
                 </div>
             </div>
             )

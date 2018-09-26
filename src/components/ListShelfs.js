@@ -7,10 +7,15 @@ class ListShelfs extends Component {
 
     }
     render() {
-        const { shelfs } = this.props;
+        const { shelfs, books, updateBook } = this.props;
         return (
             shelfs.map(shelf => (
-                <Shelf name={shelf.name} books={shelf.books} key={shelf.name}/>
+                <Shelf 
+                    shelf={shelf} 
+                    books={books.filter(book => book.shelf === shelf.value)} 
+                    updateBook={updateBook}
+                    key={shelf.value}
+                />
             ))
         )
     }

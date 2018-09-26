@@ -7,7 +7,7 @@ import * as BooksAPI from '../utils/BooksAPI'
 class SearchBook extends Component {
     state = {
         query: '',
-        books: []
+        search_results: []
     }
     
     updateQuery = (query) => {
@@ -16,28 +16,32 @@ class SearchBook extends Component {
 
     searchBooks = () => {
         if (this.state.query) {
-            BooksAPI.search(this.state.query).then(bks => {
-                if (bks.length > 0)
+            BooksAPI.search(this.state.query).then(results => {
+                // console.log(results);
+                if (results.length > 0)
                     this.setState({
-                        books: bks.map(bk => {
-                            return {
-                                title: (bk.title) ? bk.title : '',
-                                authors: (bk.authors) ? bk.authors : [],
-                                url: (bk.imageLinks) ? bk.imageLinks.thumbnail : '',
-                                id: bk.id
-                                    }
-                        })
+                        search_results: results
                     })
                 else
-                    this.setState({ books: [] })
+                    this.setState({ search_results: [] })
             })
         }
         else
-            this.setState({ books: [] })
+            this.setState({ search_results: [] })
     }
         
     render() {
-        const { query, books } = this.state;
+        const { query, search_results } = this.state;
+        const { updateBook, books } = this.props;
+        
+        search_results.forEach(sr => {
+            sr.shelf = 'none';
+            books.forEach(bk => {
+                if(bk.id === sr.id)
+                    sr.shelf = bk.shelf;
+            })
+        })
+    
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -51,7 +55,9 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ListBooks books={books}/>
+                    <ListBooks 
+                        books={search_results}
+                        updateBook={updateBook}/>
                 </div>
             </div>
         )

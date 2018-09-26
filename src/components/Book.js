@@ -6,15 +6,19 @@ class Book extends Component {
 
     }
     render() {
-        const { url, title, authors } = this.props;
+        const { book, updateBook } = this.props;
+        const { authors, title, imageLinks, shelf } = this.props.book;
+
+        let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
         return (
             <li>
                 <div className="book">
                     <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${url})` }}>
+                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${image})` }}>
                         </div>
                         <div className="book-shelf-changer">
-                            <select>
+                            <select value={shelf}
+                                onChange={e => (updateBook(book, e.target.value))}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
