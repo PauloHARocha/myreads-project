@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import Shelf from './Shelf'
 
 
-class ListShelfs extends Component {
+class ListShelves extends Component {
     state = {
 
     }
     render() {
-        const { shelfs, books, updateBook } = this.props;
+        const { shelves, books, updateBook } = this.props;
         return (
-            shelfs.map(shelf => (
+            shelves.map(shelf => (
                 <Shelf 
                     shelf={shelf} 
                     books={books.filter(book => book.shelf === shelf.value)} 
@@ -22,4 +22,4 @@ class ListShelfs extends Component {
 }
 
 
-export default ListShelfs
+export default ListShelves

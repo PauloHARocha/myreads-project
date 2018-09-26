@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './utils/BooksAPI'
-import ListShelfs from './components/ListShelfs'
+import ListShelves from './components/ListShelves'
 import SearchBook from './components/SearchBook'
 import './App.css'
 
 
 class BooksApp extends React.Component {
   state = {
-    shelfs: [
+    shelves: [
       {
         name: 'Currently Reading',
         value: 'currentlyReading'
@@ -57,8 +57,8 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <ListShelfs 
-                shelfs={this.state.shelfs} 
+              <ListShelves 
+                shelves={this.state.shelves} 
                 books={this.state.books} 
                 updateBook={this.updateBook}/>
             </div>
