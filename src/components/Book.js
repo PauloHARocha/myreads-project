@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 
 
 class Book extends Component {
-    state = {
-
-    }
     render() {
-        const { book, updateBook } = this.props;
+        const { book, updateBook, index_books } = this.props;
         const { authors, title, imageLinks, shelf } = this.props.book;
 
         let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
@@ -20,9 +17,15 @@ class Book extends Component {
                             <select value={shelf}
                                 onChange={e => (updateBook(book, e.target.value))}>
                                 <option value="move" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
+                                <option value="currentlyReading">
+                                    Currently Reading ({index_books.filter((book) => (book.shelf === "currentlyReading")).length})
+                                </option>
+                                <option value="wantToRead">
+                                    Want to Read ({index_books.filter((book) => (book.shelf === "wantToRead")).length})
+                                </option>
+                                <option value="read">
+                                    Read ({index_books.filter((book) => (book.shelf === "read")).length})
+                                </option>
                                 <option value="none">None</option>
                             </select>
                         </div>

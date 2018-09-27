@@ -191,8 +191,8 @@ body, .app {
     z-index: 100;
     position: relative;
     margin: auto;
-    border: 7px solid #f3f3f3; /* Cinza claro */
-    border-top: 7px solid deepskyblue; /* Azul */
+    border: 7px solid #f3f3f3; 
+    border-top: 7px solid #2e7d32; 
     border-radius: 50%;
     width: 25px;
     height: 25px;

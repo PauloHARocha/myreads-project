@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ListBooks from './ListBooks'
+import Loader from './Loader'
 import * as BooksAPI from '../utils/BooksAPI'
 
 
 class SearchBook extends Component {
     state = {
         query: '',
-        search_results: []
+        search_results: [],
+        loading: false
     }
     
     updateQuery = (query) => {
@@ -15,23 +17,21 @@ class SearchBook extends Component {
     }
 
     searchBooks = () => {
-        if (this.state.query) {
+        if (this.state.query){
+            this.setState({loading: true})
             BooksAPI.search(this.state.query).then(results => {
-                // console.log(results);
                 if (results.length > 0)
-                    this.setState({
-                        search_results: results
-                    })
+                    this.setState({ search_results: results, loading:false })
                 else
-                    this.setState({ search_results: [] })
+                    this.setState({ search_results: [], loading: false })
             })
+
         }
         else
             this.setState({ search_results: [] })
-    }
-        
+    }   
     render() {
-        const { query, search_results } = this.state;
+        const { query, search_results, loading } = this.state;
         const { updateBook, books } = this.props;
         
         search_results.forEach(sr => {
@@ -55,9 +55,19 @@ class SearchBook extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ListBooks 
-                        books={search_results}
-                        updateBook={updateBook}/>
+                    {(search_results.length < 1 && query.length > 0 && !loading) && (
+                        <h2>Sorry, no results found for '{query}'</h2>
+                    )}
+                    {(search_results.length > 0 && !loading) && (
+                        <h2>{search_results.length} results found for '{query}'</h2>
+                    )}
+                    <Loader loading={loading}/>
+                    {(!loading) && (
+                        <ListBooks 
+                            books={search_results}
+                            index_books={books}
+                            updateBook={updateBook}/>
+                    )}
                 </div>
             </div>
         )
