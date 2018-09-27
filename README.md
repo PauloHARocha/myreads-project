@@ -6,7 +6,7 @@
 
 Search for books you want to read and assign them to the corresponding shelf as you read.
 
-#Librarys and packages
+# Librarys and packages
 
 * React
 * React Router
