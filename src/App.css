@@ -178,7 +178,7 @@ body, .app {
     width: 100%;
     margin: auto;
     position: fixed;
-    padding: 5%;
+    z-index: 100;
 }
 
 .loader-content p {
@@ -190,7 +190,6 @@ body, .app {
  */
 .loader {
     visibility: visible;
-    z-index: 100;
     position: relative;
     margin: auto;
     border: 7px solid #f3f3f3; 

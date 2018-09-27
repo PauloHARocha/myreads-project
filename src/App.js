@@ -57,21 +57,22 @@ class BooksApp extends React.Component {
         )}/>
         <Route exact path='/' render={() => (
           <div className="list-books">
+            
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <Loader loading={this.state.loading} />
-            {(!this.state.loading) && (
-              <div className="list-books-content">
-                <ListShelves 
-                  shelves={this.state.shelves} 
-                  books={this.state.books} 
-                  updateBook={this.updateBook}/>
-              </div>
-            )}
-              <div className="open-search">
-                <Link className='close-create-contact' to='/search'>Add a book</Link>
-              </div>
+            
+            <div className="list-books-content">
+              <Loader loading={this.state.loading}/>
+              <ListShelves 
+                shelves={this.state.shelves} 
+                books={this.state.books} 
+                updateBook={this.updateBook}/>
+            </div>
+            
+            <div className="open-search">
+              <Link className='close-create-contact' to='/search'>Add a book</Link>
+            </div>
           </div>
         )}/>
       </div>
