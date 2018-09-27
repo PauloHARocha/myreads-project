@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './utils/BooksAPI'
 import ListShelves from './components/ListShelves'
 import SearchBook from './components/SearchBook'
+import Loader from './components/Loader'
 import './App.css'
 
 
@@ -23,13 +24,16 @@ class BooksApp extends React.Component {
       }, 
     ],
     books: [],
+    loading: false,
   }
 
   componentDidMount() {
+    this.setState({ loading: true })
     this.updateAllBooks();
   }
 
   updateBook = (book, shelf) => {
+    this.setState({ loading: true })
     BooksAPI.update(book, shelf).then(() => {
       this.updateAllBooks()
     })
@@ -37,7 +41,7 @@ class BooksApp extends React.Component {
 
   updateAllBooks = () => {
     BooksAPI.getAll().then(books => {
-      this.setState({ books: books })
+      this.setState({ books: books, loading: false })
     })
   }
 
@@ -56,15 +60,18 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <div className="list-books-content">
-              <ListShelves 
-                shelves={this.state.shelves} 
-                books={this.state.books} 
-                updateBook={this.updateBook}/>
-            </div>
-            <div className="open-search">
-              <Link className='close-create-contact' to='/search'>Add a book</Link>
-            </div>
+            <Loader loading={this.state.loading} />
+            {(!this.state.loading) && (
+              <div className="list-books-content">
+                <ListShelves 
+                  shelves={this.state.shelves} 
+                  books={this.state.books} 
+                  updateBook={this.updateBook}/>
+              </div>
+            )}
+              <div className="open-search">
+                <Link className='close-create-contact' to='/search'>Add a book</Link>
+              </div>
           </div>
         )}/>
       </div>
