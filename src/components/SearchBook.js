@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { DebounceInput } from 'react-debounce-input'
 import ListBooks from './ListBooks'
 import Loader from './Loader'
 import * as BooksAPI from '../utils/BooksAPI'
@@ -21,33 +22,36 @@ class SearchBook extends Component {
             this.setState({loading: true})
             BooksAPI.search(this.state.query).then(results => {
                 if (results.length > 0)
-                    this.setState({ search_results: results, loading:false })
+                    this.setState({ 
+                        search_results: this.prepareSearchResults(results), 
+                        loading:false })
                 else
                     this.setState({ search_results: [], loading: false })
             })
-
         }
         else
             this.setState({ search_results: [] })
     }   
+
+    prepareSearchResults = (results) => {
+        return results.map(sr => {
+            let bk = this.props.books.find((bk) => ( bk.id == sr.id ));
+            sr.shelf = bk ? bk.shelf : 'none';
+            return sr;
+        }) 
+    }
     render() {
         const { query, search_results, loading } = this.state;
         const { updateBook, books } = this.props;
         
-        search_results.forEach(sr => {
-            sr.shelf = 'none';
-            books.forEach(bk => {
-                if(bk.id === sr.id)
-                    sr.shelf = bk.shelf;
-            })
-        })
-    
         return (
             <div className="search-books">
                 <div className="search-books-bar">
                     <Link className='close-search' to='/'>Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input 
+                        <DebounceInput
+                            minLength={1}
+                            debounceTimeout={500} 
                             type="text" 
                             placeholder="Search by title or author"
                             value={query}

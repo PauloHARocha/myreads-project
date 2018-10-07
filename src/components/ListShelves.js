@@ -1,23 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Shelf from './Shelf'
 
 
-class ListShelves extends Component {
+const ListShelves = props => {
     
-    render() {
-        const { shelves, books, updateBook } = this.props;
-        return (
-            shelves.map(shelf => (
-                <Shelf 
-                    shelf={shelf} 
-                    books={books.filter(book => book.shelf === shelf.value)}
-                    index_books={books} 
-                    updateBook={updateBook}
-                    key={shelf.value}
-                />
-            ))
-        )
-    }
+    const { shelves, books, updateBook } = props;
+    return (
+        shelves.map(shelf => (
+            <Shelf 
+                shelf={shelf} 
+                books={books.filter(book => book.shelf === shelf.value)}
+                index_books={books} 
+                updateBook={updateBook}
+                key={shelf.value}
+            />
+        ))
+    )
+    
 }
 
 
